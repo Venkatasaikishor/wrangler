@@ -46,7 +46,7 @@ recipe
  ;
 
 statements
- :  ( Comment | macro | directive ';' | pragma ';' | ifStatement)*
+ :  ( Comment | macro | directive ';' | pragma ';' | ifStatement)* 
  ;
 
 directive
@@ -66,6 +66,13 @@ directive
     | properties
   )*?
   ;
+
+value
+ : String | Number | Column | Bool | byteSizeArg | timeDurationArg
+ ;
+
+byteSizeArg: BYTE_SIZE ;
+timeDurationArg: TIME_DURATION ;
 
 ifStatement
   : ifStat elseIfStat* elseStat? '}'
@@ -139,10 +146,6 @@ numberRange
  : Number ':' Number '=' value
  ;
 
-value
- : String | Number | Column | Bool
- ;
-
 ecommand
  : '!' Identifier
  ;
@@ -195,58 +198,56 @@ identifierList
  : Identifier (',' Identifier)*
  ;
 
-
 /*
  * Following are the Lexer Rules used for tokenizing the recipe.
  */
 OBrace   : '{';
-CBrace   : '}';
-SColon   : ';';
-Or       : '||';
-And      : '&&';
-Equals   : '==';
-NEquals  : '!=';
-GTEquals : '>=';
-LTEquals : '<=';
-Match    : '=~';
-NotMatch : '!~';
-QuestionColon : '?:';
-StartsWith : '=^';
-NotStartsWith : '!^';
-EndsWith : '=$';
-NotEndsWith : '!$';
-PlusEqual : '+=';
-SubEqual : '-=';
-MulEqual : '*=';
-DivEqual : '/=';
-PerEqual : '%=';
-AndEqual : '&=';
-OrEqual  : '|=';
-XOREqual : '^=';
-Pow      : '^';
-External : '!';
-GT       : '>';
-LT       : '<';
-Add      : '+';
-Subtract : '-';
-Multiply : '*';
-Divide   : '/';
-Modulus  : '%';
-OBracket : '[';
-CBracket : ']';
-OParen   : '(';
-CParen   : ')';
-Assign   : '=';
-Comma    : ',';
-QMark    : '?';
-Colon    : ':';
-Dot      : '.';
-At       : '@';
-Pipe     : '|';
-BackSlash: '\\';
-Dollar   : '$';
+CBrace   : '}'; 
+SColon   : ';'; 
+Or       : '||'; 
+And      : '&&'; 
+Equals   : '=='; 
+NEquals  : '!='; 
+GTEquals : '>='; 
+LTEquals : '<='; 
+Match    : '=~'; 
+NotMatch : '!~'; 
+QuestionColon : '?:'; 
+StartsWith : '=^'; 
+NotStartsWith : '!^'; 
+EndsWith : '=$'; 
+NotEndsWith : '!$'; 
+PlusEqual : '+='; 
+SubEqual : '-='; 
+MulEqual : '*='; 
+DivEqual : '/='; 
+PerEqual : '%='; 
+AndEqual : '&='; 
+OrEqual  : '|='; 
+XOREqual : '^='; 
+Pow      : '^'; 
+External : '!'; 
+GT       : '>'; 
+LT       : '<'; 
+Add      : '+'; 
+Subtract : '-'; 
+Multiply : '*'; 
+Divide   : '/'; 
+Modulus  : '%'; 
+OBracket : '['; 
+CBracket : ']'; 
+OParen   : '('; 
+CParen   : ')'; 
+Assign   : '='; 
+Comma    : ','; 
+QMark    : '?'; 
+Colon    : ':'; 
+Dot      : '.'; 
+At       : '@'; 
+Pipe     : '|'; 
+BackSlash: '\\'; 
+Dollar   : '$'; 
 Tilde    : '~';
-
 
 Bool
  : 'true'
@@ -258,16 +259,13 @@ Number
  ;
 
 Identifier
- : [a-zA-Z_\-] [a-zA-Z_0-9\-]*
- ;
+ : [a-zA-Z_\-] [a-zA-Z_0-9\-]* ;
 
 Macro
- : [a-zA-Z_] [a-zA-Z_0-9]*
- ;
+ : [a-zA-Z_] [a-zA-Z_0-9]* ;
 
 Column
- : ':' [a-zA-Z_\-] [:a-zA-Z_0-9\-]*
- ;
+ : ':' [a-zA-Z_\-] [:a-zA-Z_0-9\-]* ;
 
 String
  : '\'' ( EscapeSequence | ~('\'') )* '\''
